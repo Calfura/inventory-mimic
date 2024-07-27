@@ -1,3 +1,4 @@
+const { default: mongoose } = require("mongoose");
 
 
 // Importing Express
@@ -9,7 +10,18 @@ const app = express();
 // Allows data to be used in the from of JSON
 app.use(express.json());
 
+app.get("/", (request, response, next) => {
 
+    response.json({
+        message: "Hello world!"
+    });
+});
+
+const UserRouter = require("../controllers/UserRouter");
+app.use("/users", UserRouter);
+
+const InventoryRouter = require("../controllers/InventoryRouter");
+app.use("/inventory", InventoryRouter);
 
 
 // Return a bunch of useful details from the database connection
@@ -38,6 +50,6 @@ app.use((error, request, response, next) => {
 });
 
 
-modules.exports = {
+module.exports = {
     app
 }

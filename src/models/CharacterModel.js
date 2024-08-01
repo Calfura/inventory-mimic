@@ -1,13 +1,27 @@
 const mongoose = require("mongoose");
 
-const Character = mongoose.model("Character", {
-    user: String,
-    name: String,
-    strength: Number,
-    max_carry: Number,
-    inventory: String
-});
 
-module.exports = {
-    Character
-}
+const characterSchema = mongoose.Schema({
+    user: {
+        type: [{user: String}],
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    strength: {
+        type: Number,
+        required: true
+    },
+    maxCarry: {
+        type: Number,
+        required: true
+    },
+    charInventory: {
+        type: [{character: String, item: String}],
+        required: true
+    }
+})
+
+const CharacterModel = mongoose.model("Character", characterSchema);

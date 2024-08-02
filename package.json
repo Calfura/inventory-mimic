@@ -15,8 +15,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "node ./src/boot.js",
+    "start-react": "react-scripts start",
     "build": "react-scripts build",
+    "test": "react-scripts test",
     "dev": "nodemon ./src/boot.js",
     "eject": "react-scripts eject"
   },

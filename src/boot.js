@@ -1,9 +1,9 @@
 const { app } = require("./Database/utils/server.js");
-const { connect } = require("./Database/utils/database.js");
+const { databaseConnect } = require("./Database/utils/database.js");
 
 
 
 app.listen(3000, () => {
-    connect();
+    databaseConnect();
     console.log("Server running on port 3000")
 });

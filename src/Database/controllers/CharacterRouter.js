@@ -1,6 +1,6 @@
 const express = require("express");
 const { Character } = require("../models/CharacterModel");
-const { app } = require("../utils/server")
+// const { app } = require("../utils/server")
 const router = express.Router();
 
 router.get("/", (request, response) => {

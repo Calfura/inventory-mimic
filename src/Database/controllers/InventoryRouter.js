@@ -1,6 +1,5 @@
 const express = require("express");
 const { Inventory } = require("../models/InventoryModel");
-const { app } = require("../utils/server")
 const router = express.Router();
 
 router.get("/", (request, response) => {

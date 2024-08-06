@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 const inventorySchema = mongoose.Schema ({
     character: {
-        type: String, // Replace with Mongoose Object ID
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Character",
         required: true
     },
     item: {
@@ -21,3 +22,7 @@ const inventorySchema = mongoose.Schema ({
 })
 
 const InventoryModel = mongoose.model("Inventory", inventorySchema);
+
+module.exports = {
+    InventoryModel
+}

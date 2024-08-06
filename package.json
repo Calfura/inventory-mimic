@@ -6,7 +6,9 @@
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "bcryptjs": "^2.4.3",
     "express": "^4.19.2",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.2",
     "nodemon": "^3.1.4",
     "react": "^18.3.1",
@@ -19,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "dev": "nodemon ./src/boot.js",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "seed": "node src/backend/utils/seed.js"
   },
   "eslintConfig": {
     "extends": [

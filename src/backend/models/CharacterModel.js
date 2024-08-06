@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 
 const characterSchema = mongoose.Schema({
     user: {
-        type: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
         required: true
     },
     name: {

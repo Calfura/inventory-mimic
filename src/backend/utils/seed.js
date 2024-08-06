@@ -1,5 +1,6 @@
-const { UserModel } = require("../models/UserModel");
-const { databaseClear, databaseClose } = require("./database");
+const { UserModel } = require("../models/UserModel.js");
+const { createJwt, validateJwt } = require("./authHelper.js");
+const { databaseClear, databaseClose, databaseConnect } = require("./database.js");
 
 
 async function seedUsers() {
@@ -29,10 +30,15 @@ async function seedUsers() {
 
 async function seed() {
 
-    await databaseConenct();
+    await databaseConnect();
     await databaseClear();
 
     let newUsers = await seedUsers();
+
+    let newJwt = createJwt(newUsers[0]._id)
+    console.log("New JWT: " + newJwt);
+
+    validateJwt(newJwt);
 
     console.log("Database seeded!")
     await databaseClose();

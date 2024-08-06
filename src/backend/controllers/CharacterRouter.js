@@ -1,6 +1,5 @@
 const express = require("express");
 const { Character } = require("../models/CharacterModel");
-// const { app } = require("../utils/server")
 const router = express.Router();
 
 router.get("/", (request, response) => {
@@ -11,7 +10,7 @@ router.get("/", (request, response) => {
 
 // Checking for all Character Data
 // localhost:3000/characters/all
-router.get("/all", async(request, response) => {
+router.get("/all", async(request, response, next) => {
     let results = await Character.find().exec();
     console.log("Characters Found!")
     console.log(results);
@@ -23,7 +22,7 @@ router.get("/all", async(request, response) => {
 
 // Finding Character by ID request
 // localhost:3000/characters/:id
-router.get("/:id", async(request, response) => {
+router.get("/:id", async(request, response, next) => {
     let results = await Character.findById(request.params.id).exec();
     console.log("Found Character!")
     console.log (results)
@@ -35,7 +34,7 @@ router.get("/:id", async(request, response) => {
 
 // Creating new Character with JSON data
 // POST localhost:3000/characters/
-router.post("/", async(request, response) => {
+router.post("/", async(request, response, next) => {
     let results = await Character.create(request.body);
     console.log("Character created!")
     console.log(results)
@@ -47,13 +46,13 @@ router.post("/", async(request, response) => {
 
 // Updating Character data
 // PATCH localhost:3000/characters/:id
-router.patch("/:id", (request, response) =>{
+router.patch("/:id", (request, response, next) =>{
 
 });
 
 // Deleting Character data
 // DELETE localhost:3000/characters/:id
-router.delete("/:id", (request, response) =>{
+router.delete("/:id", (request, response, next) =>{
 
 });
 

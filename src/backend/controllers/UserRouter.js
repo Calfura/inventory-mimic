@@ -1,5 +1,5 @@
 const express = require("express");
-const { User } = require("../models/UserModel");
+const { User, UserModel } = require("../models/UserModel");
 const router = express.Router();
 
 router.get("/", (request, response) => {
@@ -11,7 +11,7 @@ router.get("/", (request, response) => {
 
 // Checking for all User Data
 // localhost:3000/users/all
-router.get("/all", async(request, response) => {
+router.get("/all", async(request, response, next) => {
     let results = await User.find().exec();
     console.log("Found Users!")
     console.log(results);
@@ -23,7 +23,7 @@ router.get("/all", async(request, response) => {
 
 // Finding User by ID request
 // localhost:3000/users/:id
-router.get("/:id", async(request, response) => {
+router.get("/:id", async(request, response, next) => {
     let results = await User.findById(request.params.id).exec();
     console.log("Found User!")
     console.log (results)
@@ -35,25 +35,43 @@ router.get("/:id", async(request, response) => {
 
 // Creating new User with JSON data
 // POST localhost:3000/users/
-router.post("/", async(request, response) => {
-    let results = await User.create(request.body);
-    console.log("User created!")
-    console.log(results)
+router.post("/", async(request, response, next) => {
+
+    console.log("Signup Body:");
+    console.log(request.body)
+
+    let result = await UserModel.create(request.body).catch(error => {
+        error.status = 400;
+        console.log("Error on user creation", error)
+        return error
+    });
+
+    if (result.errors) {
+        return next(result);
+    };
+
     response.json({
         message: "User created!",
-        data: results
+        result: result
     });
 });
 
 // Updating User data
 // PATCH localhost:3000/users/:id
-router.patch("/:id", (request, response) =>{
+router.patch("/:id", (request, response, next) =>{
 
 });
 
 // Deleting User data
 // DELETE localhost:3000/users/:id
-router.delete("/:id", (request, response) =>{
+router.delete("/:id", async(request, response, next) =>{
+
+    let result = await UserModel.findByIdAndDelete(request.body.id);
+
+    response.json({
+        message:"User deleted",
+        result: result
+    })
 
 });
 

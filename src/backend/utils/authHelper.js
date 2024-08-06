@@ -1,5 +1,8 @@
-const bcrypt = require("bcryptjs")
-const jwt = require("jsonwebtoken")
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+dotenv.config();
+
 
 // Password encryption check, to ensure if plain password
 // matches encrypted password
@@ -31,7 +34,7 @@ function createJwt(userId){
 }
 
 
-function validateJwt(jwtValidate){
+function validateJwt(jwtToValidate){
     let isJwtValid = false;
 
     jwt.verify(jwtToValidate, process.env.JWT_KEY, (error, decodedJwt) => {

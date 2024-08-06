@@ -1,5 +1,5 @@
-const { app } = require("./Database/utils/server.js");
-const { databaseConnect } = require("./Database/utils/database.js");
+const { app } = require("./backend/utils/server.js");
+const { databaseConnect } = require("./backend/utils/database.js");
 
 
 

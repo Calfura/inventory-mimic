@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 dotenv.config();
 
-
 // Password encryption check, to ensure if plain password
 // matches encrypted password
 async function comparePasswords(plainTextPassword, encryptedPassword) {

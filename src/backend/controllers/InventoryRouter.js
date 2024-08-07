@@ -24,7 +24,7 @@ router.get("/all", async(request, response, next) => {
 // Finding Inventory by ID request
 // localhost:3000/inventory/:id
 router.get("/:id", async(request, response, next) => {
-    let results = await Inventory.findById(request.params.id).exec();
+    let results = await InventoryModel.findById(request.params.id).exec();
     console.log("Found Inventory!")
     console.log (results)
     response.json({
@@ -33,10 +33,10 @@ router.get("/:id", async(request, response, next) => {
     });
 });
 
-// Creating new Inventory with JSON data
+// Creating new item for character
 // POST localhost:3000/inventory/
 router.post("/", async(request, response, next) => {
-    let results = await Inventory.create(request.body).catch(error => {
+    let result = await InventoryModel.create(request.body).catch(error => {
         // Bad request by user, incorrect fields used
         error.status = 400;
         return error
@@ -47,10 +47,10 @@ router.post("/", async(request, response, next) => {
     };
 
     console.log("Inventory created!")
-    console.log(results)
+    console.log(result)
     response.json({
         message: "Inventory created!",
-        data: results
+        data: result
     });
 });
 
@@ -83,8 +83,14 @@ router.patch("/:id", async(request, response, next) =>{
 
 // Deleting Inventory data
 // DELETE localhost:3000/inventory/:id
-router.delete("/:id", (request, response, next) =>{
+router.delete("/:id", async(request, response, next) =>{
 
+    let result = await InventoryModel.findByIdAndDelete(request.body.id);
+
+    response.json({
+        message:"Inventory router, delete...",
+        result: result
+    });
 });
 
 module.exports = router;

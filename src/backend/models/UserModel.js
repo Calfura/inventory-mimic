@@ -11,7 +11,9 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true,
-        unique: false
+        unique: false,
+        // Hides password when searching for users data
+        select: false
     }
 });
 

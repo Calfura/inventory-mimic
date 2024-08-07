@@ -1,33 +1,44 @@
 const { CharacterModel } = require("../models/CharacterModel.js");
 const { InventoryModel } = require("../models/InventoryModel.js");
 const { UserModel } = require("../models/UserModel.js");
-const { createJwt, validateJwt } = require("./authHelper.js");
+const { createJwt, validateJwt, comparePasswords } = require("./authHelper.js");
 const { databaseClear, databaseClose, databaseConnect } = require("./database.js");
 
 // Seeding User database
 async function seedUsers() {
 
+    // Test data for database connections.
     let userData = [
         {
             username: "User1",
-            email: "example1@email.com",
             password: "password"
         },
         {
             username: "User2",
-            email: "example2@email.com",
-            password: "password"
-        },
-        {
-            username: "User3",
-            email: "example3@email.com",
             password: "password"
         }
     ];
 
+    // Test account for password encryption and salting
+    let testUser = {
+        username: "TestUser",
+        password: "TestPassword"
+    }
+
+    console.log("Creation of password test user...")
+    let tester = await UserModel.create(testUser);
+
+    console.log("Call on save for password test user...")
+    await tester.save();
+
+    console.log("TestUser encrypted password is: " + tester.password);
+    let passwordMatchTest = await comparePasswords("TestPassword", tester.password);
+    console.log("Tester's password is TestPassword: " + passwordMatchTest);
+
     let result = await UserModel.insertMany(userData)
-    console.log(result)
-    return result;
+    
+    console.log(...result, tester)
+    return [...result, tester];
 };
 
 // Seeding Character database

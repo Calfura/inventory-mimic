@@ -1,5 +1,5 @@
 const express = require("express");
-const { Inventory, InventoryModel } = require("../models/InventoryModel");
+const { InventoryModel } = require("../models/InventoryModel");
 const router = express.Router();
 
 router.get("/", (request, response) => {
@@ -12,7 +12,7 @@ router.get("/", (request, response) => {
 // Checking for all Inventory Data
 // localhost:3000/inventory/all
 router.get("/all", async(request, response, next) => {
-    let results = await Inventory.find().exec();
+    let results = await InventoryModel.find().exec();
     console.log("Inventories Found!")
     console.log(results);
     response.json({

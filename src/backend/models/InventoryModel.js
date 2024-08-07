@@ -7,14 +7,17 @@ const inventorySchema = mongoose.Schema ({
         ref: "Character",
         required: true
     },
+    // Item name
     item: {
         type: String,
         required: false
     },
+    // Item weight
     weight: {
         type: Number,
         required: false
     },
+    // Item description
     description: {
         type: String,
         required: false

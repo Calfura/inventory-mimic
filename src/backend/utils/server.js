@@ -20,6 +20,9 @@ app.get("/", (request, response, next) => {
 const UserRouter = require("../controllers/UserRouter");
 app.use("/users", UserRouter);
 
+const CharacterRouter = require("../controllers/CharacterRouter")
+app.use("/character", CharacterRouter);
+
 const InventoryRouter = require("../controllers/InventoryRouter");
 app.use("/inventory", InventoryRouter);
 

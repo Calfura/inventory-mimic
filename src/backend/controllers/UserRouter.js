@@ -12,7 +12,7 @@ router.get("/", (request, response) => {
 // Checking for all User Data
 // localhost:3000/users/all
 router.get("/all", async(request, response, next) => {
-    let results = await User.find().exec();
+    let results = await UserModel.find().exec();
     console.log("Found Users!")
     console.log(results);
     response.json({
@@ -24,7 +24,7 @@ router.get("/all", async(request, response, next) => {
 // Finding User by ID request
 // localhost:3000/users/:id
 router.get("/:id", async(request, response, next) => {
-    let results = await User.findById(request.params.id).exec();
+    let results = await UserModel.findById(request.params.id).exec();
     console.log("Found User!")
     console.log (results)
     response.json({

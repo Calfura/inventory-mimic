@@ -1,5 +1,12 @@
 const { default: mongoose } = require("mongoose");
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+const { decrypt } = require("dotenv");
+=======
+>>>>>>> Stashed changes
 
+>>>>>>> parent of 43b6d8c (feat: Initial work for encryption and decryption protection)
 
 // Importing Express
 const express = require("express");
@@ -52,7 +59,13 @@ app.use((error, request, response, next) => {
     });
 });
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 
+>>>>>>> parent of 43b6d8c (feat: Initial work for encryption and decryption protection)
 module.exports = {
     app
 }

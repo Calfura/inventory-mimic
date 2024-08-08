@@ -8,6 +8,7 @@ router.get("/", (request, response) => {
     });
 });
 
+
 // Checking for all User Data
 // localhost:3000/users/all
 router.get("/all", async(request, response, next) => {

@@ -1,6 +1,4 @@
 const { default: mongoose } = require("mongoose");
-const { decrypt } = require("dotenv");
-const { decryptObject, encryptString, decryptString } = require("../controllers/ LoginRoute");
 
 
 // Importing Express
@@ -54,47 +52,6 @@ app.use((error, request, response, next) => {
     });
 });
 
-const validateBasicAuth = (request, response, next) => {
-
-    let authHeader = request.headers["authorization"] ?? null;
-
-    if (authHeader == null) {
-        throw new Error("Auth data missing from protected route!!!")
-    }
-
-    if (authHeader.startsWith("Basic ")) {
-        authHeader = authHeader.substring(5).trim();
-    }
-
-    let decodedAuth = Buffer.from(authHeader, 'base64').toString('ascii');
-
-    let objDecodedAuth = {username: "", password: ""};
-    objDecodedAuth.username = decodedAuth.substring(0, decodedAuth.indexOf(":"));
-    objDecodedAuth.password = decodedAuth.substring(decodedAuth.indexOf(":") + 1);
-
-    request.userAuthDetails = objDecodedAuth;
-
-    next();
-};
-
-app.get("/encryptAuthData", validateBasicAuth, (request, response, next) => {
-    let encryptAuthResult = encryptString(JSON.stringify(request.userAuthDetails));
-
-    response.json({
-        user: encryptAuthResult
-    });
-});
-
-app.get("/decryptAuthData", (request, response) => {
-
-    let encryptedAuthHeader = request.headers['encryptedauth'];
-    
-    let decryptAuthResult = decryptObject(encryptedAuthHeader);
-
-    response.json({
-        user: decryptAuthResult
-    });
-});
 
 module.exports = {
     app

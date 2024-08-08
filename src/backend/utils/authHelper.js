@@ -11,7 +11,7 @@ async function comparePasswords(plainTextPassword, encryptedPassword) {
     doesPasswordMatch = await bcrypt.compare(plainTextPassword, encryptedPassword);
 
     return doesPasswordMatch;
-}
+};
 
 // Creating JWT for logged in users, to allow the use
 // of routes within the API and App
@@ -49,8 +49,15 @@ function validateJwt(jwtToValidate){
     return isJwtValid;
 };
 
+
+function decodeJwt(jwtToDecode){
+    let decodedData = jwt.verify(jwtToDecode, process.env.JWT_KEY)
+    return decodedData;
+}
+
 module.exports = {
     comparePasswords,
     createJwt,
-    validateJwt
+    validateJwt,
+    decodeJwt
 }

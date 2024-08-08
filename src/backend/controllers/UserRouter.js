@@ -1,5 +1,6 @@
 const express = require("express");
 const { User, UserModel } = require("../models/UserModel");
+const { createJwt, comparePasswords } = require("../utils/authHelper");
 const router = express.Router();
 
 router.get("/", (request, response) => {
@@ -11,7 +12,7 @@ router.get("/", (request, response) => {
 // Checking for all User Data
 // localhost:3000/users/all
 router.get("/all", async(request, response, next) => {
-    let results = await UserModel.find().exec();
+    let results = await UserModel.find({}).exec();
     console.log("Found Users!")
     console.log(results);
     response.json({
@@ -73,5 +74,35 @@ router.delete("/:id", async(request, response, next) =>{
     })
 
 });
+
+// User Login route
+
+router.post("/jwt", async(request, response, next) => {
+    let newJwt = "";
+
+    if (!request.body.password || !request.body.username){
+        return next(new Error("Missing login details in request"))
+    }
+
+    // Find username in DB
+    let foundUser = await UserModel.findOne({username: request.body.username}).exec();
+    
+    // Comparing foundUser password with request.body.password
+    let isPasswordCorrect = await comparePasswords(request.body.password, foundUser.password);
+    
+    // JWT creation for foundUser
+    if (isPasswordCorrect){
+    
+        newJwt = createJwt(foundUser._id);
+    
+        response.json({
+            jwt: newJwt
+        });
+
+    } else {
+        return next(new Error("Incorrect password!"))
+    }
+});
+
 
 module.exports = router;

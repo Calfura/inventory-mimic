@@ -1,4 +1,4 @@
-const { default: mongoose } = require("mongoose");
+const { default: mongoose, Aggregate } = require("mongoose");
 const { decrypt } = require("dotenv");
 
 
@@ -7,6 +7,10 @@ const express = require("express");
 
 // Express server instance creation
 const app = express();
+
+// Cors required for decrypting data for Validation
+const cors = require("cors")
+app.use(cors());
 
 // Allows data to be used in the from of JSON
 app.use(express.json());
@@ -44,6 +48,12 @@ app.get("/databaseHealth", (request, response) => {
         dbHost: databaseHost   
     })
 });
+
+app.get("*", (request, response, next) => {
+    response.status(404).json({
+        message: "404 Page not found"
+    })
+})
 
 // Catches and throws error message on server crash
 app.use((error, request, response, next) => {

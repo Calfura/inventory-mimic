@@ -1,6 +1,6 @@
 const express = require("express");
 const { User, UserModel } = require("../models/UserModel");
-const { createJwt, comparePasswords } = require("../utils/authHelper");
+const { createJwt, comparePasswords, decodeJwt } = require("../utils/authHelper");
 const router = express.Router();
 
 router.get("/", (request, response) => {
@@ -47,13 +47,18 @@ router.post("/", async(request, response, next) => {
         return error
     });
 
+    let jwt = createJwt(result._id);
+    let decodedJwt = decodeJwt(jwt);
+
     if (result.errors) {
         return next(result);
     };
 
     response.json({
         message: "User created!",
-        result: result
+        result: result,
+        jwt: jwt,
+        decodedJwt
     });
 });
 

@@ -22,7 +22,7 @@
     "start-react": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "dev": "nodemon ./src/boot.js",
+    "dev-server": "nodemon ./src/boot.js",
     "eject": "react-scripts eject",
     "seed": "node src/backend/utils/seed.js"
   },

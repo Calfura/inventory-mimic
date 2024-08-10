@@ -98,31 +98,31 @@ async function seedInventory(characterToUse) {
         {
             character: characterToUse[0].id,
             item: "Food",
-            weight: 30,
+            weight: 31,
             description: "Basic Food stuff"
         },
         {
             character: characterToUse[0].id,
             item: "Shield",
-            weight: 50,
+            weight: 51,
             description: "Basic Shield"
         },
         {
             character: characterToUse[1].id,
             item: "Weapon 1",
-            weight: 20,
+            weight: 21,
             description: "Basic weapon"
         },
         {
             character: characterToUse[2].id,
             item: "Weapon 1",
-            weight: 20,
+            weight: 22,
             description: "Basic weapon"
         },
         {
             character: characterToUse[3].id,
             item: "Weapon 1",
-            weight: 20,
+            weight: 23,
             description: "Basic weapon"
         }
     ];

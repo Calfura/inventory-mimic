@@ -1,7 +1,8 @@
 const express = require("express");
-const { User, UserModel } = require("../models/UserModel");
-const { createJwt, comparePasswords, decodeJwt } = require("../utils/authHelper");
+const { UserModel } = require("../models/UserModel");
+const { createJwt, decodeJwt } = require("../utils/authHelper");
 const router = express.Router();
+const bcrypt = require("bcryptjs")
 
 router.get("/", (request, response) => {
     response.json({
@@ -81,34 +82,54 @@ router.delete("/:id", async(request, response, next) =>{
 
 });
 
-// User Login route
+// User Login request route
 
 router.post("/jwt", async(request, response, next) => {
-    let newJwt = "";
+    const { username } = request.body;
 
-    if (!request.body.password || !request.body.username){
-        return next(new Error("Missing login details in request"))
-    }
+    try {
+        const user = await UserModel.findOne({username}).exec();
+        if (!user) {
+            console.log("!user fail")
+            return response.status(404).json({
+                status: "failed",
+                data: [],
+                message: "Username not found."
+            });
+        }
 
-    // Find username in DB
-    let foundUser = await UserModel.findOne({username: request.body.username}).exec();
-    
-    // Comparing foundUser password with request.body.password
-    let isPasswordCorrect = await comparePasswords(request.body.password, foundUser.password);
-    
-    // JWT creation for foundUser
-    if (isPasswordCorrect){
-    
-        newJwt = createJwt(foundUser._id);
-    
-        response.json({
-            jwt: newJwt
-        });
+        const authPassword = await bcrypt.compare(
+            request.body.password,
+            user.password);
 
-    } else {
-        return next(new Error("Incorrect password!"))
+        console.log("bcrypt authpassword", authPassword)
+
+        if (!authPassword) {
+            console.log("!authPassword fail")
+            return response.status(401).json({
+                status: "failed",
+                data: [],
+                message: "Incorrect password."
+            });
+        }
+
+        // Succesful login. Create JWT and respond
+        if (authPassword) {
+            
+            console.log("authPassword success")
+            const token = createJwt(user);
+
+            response.status(200).json({
+                message: `${username} logged in`,
+                userId: user._id,
+                token
+            });
+        }
+    } catch (error) {
+        next(error);
     }
 });
+
 
 
 module.exports = router;

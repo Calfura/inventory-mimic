@@ -49,6 +49,7 @@ app.get("/databaseHealth", (request, response) => {
     })
 });
 
+
 app.get("*", (request, response, next) => {
     response.status(404).json({
         message: "404 Page not found"

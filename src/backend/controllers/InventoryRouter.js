@@ -1,5 +1,6 @@
 const express = require("express");
 const { InventoryModel } = require("../models/InventoryModel");
+const { dblClick } = require("@testing-library/user-event/dist/click");
 const router = express.Router();
 
 router.get("/", (request, response) => {
@@ -21,7 +22,19 @@ router.get("/all", async(request, response, next) => {
     });
 });
 
-// Finding Inventory by ID request
+// Selecting inventory owned by single character
+// localhost:3000/inventory/char/:id
+router.get("/char/?:id", async(request, response, next) => {
+    let result = await InventoryModel.find().exec();
+    console.log("Character Inventory selected...")
+    console.log(result)
+    response.json({
+        message: "Selected Character Inventory!",
+        result: result
+    })
+})
+
+// Finding item by ID request
 // localhost:3000/inventory/:id
 router.get("/:id", async(request, response, next) => {
     let results = await InventoryModel.findById(request.params.id).exec();

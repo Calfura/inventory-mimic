@@ -21,8 +21,8 @@ async function seedUsers() {
 
     // Test account for password encryption and salting
     let testUser = {
-        username: "TestUser",
-        password: "TestPassword"
+        username: "Test",
+        password: "test"
     }
 
     console.log("Creation of password test user...")

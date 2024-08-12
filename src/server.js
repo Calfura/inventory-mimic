@@ -1,9 +1,7 @@
 const { default: mongoose, Aggregate } = require("mongoose");
 const { decrypt } = require("dotenv");
-const serverless = require('serverless-http');
 const cors = require("cors")
 const express = require("express");
-const router = express.Router();
 
 // Express server instance creation
 const app = express();
@@ -21,8 +19,6 @@ app.get("/", (request, response, next) => {
     });
 });
 
-app.use('/.netlify/functions/api', router);
-
 const UserRouter = require("./backend/controllers/UserRouter");
 app.use("/users", UserRouter);
 
@@ -30,7 +26,6 @@ const CharacterRouter = require("./backend/controllers/CharacterRouter")
 app.use("/character", CharacterRouter);
 
 const InventoryRouter = require("./backend/controllers/InventoryRouter");
-const ServerlessHttp = require("serverless-http");
 app.use("/inventory", InventoryRouter);
 
 
@@ -68,5 +63,5 @@ app.use((error, request, response, next) => {
 
 module.exports = {
     app,
-    handler = ServerlessHttp(app);
+    handler : ServerlessHttp(app)
 }

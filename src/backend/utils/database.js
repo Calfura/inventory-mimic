@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose");
+const dotenv = require("dotenv");
 
 
 

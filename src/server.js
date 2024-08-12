@@ -2,13 +2,16 @@ const { default: mongoose, Aggregate } = require("mongoose");
 const { decrypt } = require("dotenv");
 const cors = require("cors")
 const express = require("express");
-const serverless = require('serverless-http');
 
 // Express server instance creation
 const app = express();
 
 // Cors required for decrypting data for Validation
-app.use(cors());
+app.use(cors({
+    origin: '*',
+    methods: "GET, POST, PATCH, DELETE",
+    credentials: true
+}));
 
 // Allows data to be used in the from of JSON
 app.use(express.json());
@@ -16,7 +19,7 @@ app.use(express.json());
 app.get("/", (request, response, next) => {
 
     response.json({
-        message: "Hello world!"
+        message: "Welcome to Inventory Mimic"
     });
 });
 
@@ -56,13 +59,12 @@ app.get("*", (request, response, next) => {
 
 // Catches and throws error message on server crash
 app.use((error, request, response, next) => {
-    response.status(500).json({
+    response.status(error.status || 500).json({
         message: "Error occured on the server",
         error: error.message
     });
 });
 
 module.exports = {
-    app,
-    handler : serverless(app)
+    app
 }

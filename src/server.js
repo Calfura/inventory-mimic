@@ -2,6 +2,7 @@ const { default: mongoose, Aggregate } = require("mongoose");
 const { decrypt } = require("dotenv");
 const cors = require("cors")
 const express = require("express");
+const serverless = require('serverless-http');
 
 // Express server instance creation
 const app = express();
@@ -63,5 +64,5 @@ app.use((error, request, response, next) => {
 
 module.exports = {
     app,
-    handler : ServerlessHttp(app)
+    handler : serverless(app)
 }

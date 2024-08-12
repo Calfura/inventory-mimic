@@ -22,13 +22,13 @@ app.get("/", (request, response, next) => {
     });
 });
 
-const UserRouter = require("../controllers/UserRouter");
+const UserRouter = require("./backend/controllers/UserRouter");
 app.use("/users", UserRouter);
 
-const CharacterRouter = require("../controllers/CharacterRouter")
+const CharacterRouter = require("./backend/controllers/CharacterRouter")
 app.use("/character", CharacterRouter);
 
-const InventoryRouter = require("../controllers/InventoryRouter");
+const InventoryRouter = require("./backend/controllers/InventoryRouter");
 app.use("/inventory", InventoryRouter);
 
 

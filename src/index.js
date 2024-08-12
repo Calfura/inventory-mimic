@@ -1,4 +1,4 @@
-const { app } = require("./backend/utils/server.js");
+const { app } = require("./server.js");
 const { databaseConnect } = require("./backend/utils/database.js");
 
 

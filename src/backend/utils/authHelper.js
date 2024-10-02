@@ -28,6 +28,7 @@ function createJwt(userId){
     return newJwt;
 }
 
+// Validation of JWT
 function validateJwt(jwtToValidate){
 	let isJwtValid = false;
 
@@ -44,6 +45,8 @@ function validateJwt(jwtToValidate){
 	return isJwtValid;
 }
 
+
+// Decoding Token
 function decodeJwt(jwtToDecode){
     let decodedData = jwt.verify(jwtToDecode, process.env.JWT_KEY)
     return decodedData;
